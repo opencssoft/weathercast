@@ -1,0 +1,13 @@
+<litepasl>
+
+    <dbname value="weather_cast" />
+
+    <version value="1" />
+
+    <list>
+        <mapping class="com.example.fangchen.weathercast.db.Province" />
+        <mapping class="com.example.fangchen.weathercast.db.City" />
+        <mapping class="com.example.fangchen.weathercast.db.County" />
+    </list>
+
+</litepasl>
