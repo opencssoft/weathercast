@@ -1,6 +1,6 @@
 package com.example.fangchen.weathercast.db;
 
-import DataSupport;
+import org.litepal.crud.DataSupport;
 
 /**
  * Created by fangchen on 2017/8/11.
