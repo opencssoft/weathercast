@@ -6,11 +6,5 @@
     android:layout_height="match_parent"
     tools:context="com.example.fangchen.weathercast.MainActivity">
 
-    <fragment
-        android:id="@+id/choose_area"
-        android:name="com.example.fangchen.weathercast.ChooseAreaFragment"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        />
 
 </android.support.constraint.ConstraintLayout>
