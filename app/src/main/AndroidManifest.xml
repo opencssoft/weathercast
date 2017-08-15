@@ -14,15 +14,19 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".WeatherActivity"
-            android:label="WeatherCast Application">
-
-        </activity>
+            android:label="WeatherCast Application"></activity>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <service
+            android:name=".service.AutoUpdateService"
+            android:enabled="true"
+            android:exported="true"></service>
     </application>
 
 </manifest>

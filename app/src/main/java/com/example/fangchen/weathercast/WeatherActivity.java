@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.fangchen.weathercast.gson.*;
+import com.example.fangchen.weathercast.service.AutoUpdateService;
 import com.example.fangchen.weathercast.util.HttpUtil;
 import com.example.fangchen.weathercast.util.Utility;
 
@@ -191,6 +192,9 @@ public class WeatherActivity extends AppCompatActivity {
         carwashText.setText(carWash);
         sportText.setText(sport);
         weatherLayout.setVisibility(View.VISIBLE);
+
+        Intent intent = new Intent(this, AutoUpdateService.class);
+        startService(intent);
     }
 
     private void loadBingPic(){
