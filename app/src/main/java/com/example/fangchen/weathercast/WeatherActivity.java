@@ -34,7 +34,7 @@ public class WeatherActivity extends AppCompatActivity {
     private Button navButton;
 
     public SwipeRefreshLayout swipeRefreshLayout;
-    private String mWeatherId;
+    public String mWeatherId;
 
     private ScrollView weatherLayout;
     private TextView titleCity;
@@ -91,12 +91,14 @@ public class WeatherActivity extends AppCompatActivity {
 
         String weatherString = prefs.getString("weather",null);
 
+        mWeatherId = getIntent().getStringExtra("weather_id");
+
         if(weatherString != null){
             Weather weather = Utility.handleWeatherResponse(weatherString);
             mWeatherId = weather.basic.weatherId;
             showWeatherInfo(weather);
         }else{
-            mWeatherId = getIntent().getStringExtra("weather_id");
+            //mWeatherId = getIntent().getStringExtra("weather_id");
             weatherLayout.setVisibility(View.INVISIBLE);
             requestWeather(mWeatherId);
         }
@@ -104,7 +106,7 @@ public class WeatherActivity extends AppCompatActivity {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener(){
             @Override
             public void onRefresh(){
-                mWeatherId = getIntent().getStringExtra("weather_id");
+                //mWeatherId = getIntent().getStringExtra("weather_id");
                 requestWeather(mWeatherId);
             }
         });
