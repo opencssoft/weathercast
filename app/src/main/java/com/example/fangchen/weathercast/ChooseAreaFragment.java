@@ -165,7 +165,7 @@ public class ChooseAreaFragment extends Fragment {
 
     private void queryFromServer(String address,final String type){
         showProgressDialog();
-        HttpUtil.sendOkHttpRequest(address,new Callback(){
+        HttpUtil.getInstance().sendOkHttpRequest(address,new Callback(){
             @Override
             public void onResponse(Call call,Response response) throws IOException{
                 String responseText = response.body().string();
