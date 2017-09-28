@@ -2,10 +2,14 @@ package com.example.fangchen.weathercast;
 
 import okhttp3.*;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.preference.PreferenceManager;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -50,6 +54,11 @@ public class WeatherActivity extends AppCompatActivity {
     private TextView comfortText;
     private TextView carwashText;
     private TextView sportText;
+    private SharedPreferences prefs;
+
+    private LocalBroadcastManager localBroadcastManager;
+    private IntentFilter intentFilter;
+    private LocalReceiver localReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +71,7 @@ public class WeatherActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_weather);
 
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
         bingPicImg = (ImageView)findViewById(R.id.bing_pic_img);
 
@@ -117,6 +126,18 @@ public class WeatherActivity extends AppCompatActivity {
                 drawerLayout.openDrawer(GravityCompat.START);
             }
         });
+
+        localBroadcastManager = LocalBroadcastManager.getInstance(this);
+        intentFilter = new IntentFilter();
+        intentFilter.addAction("com.example.fangchen.weathercast.weatherupdate");
+        localReceiver = new LocalReceiver();
+        localBroadcastManager.registerReceiver(localReceiver,intentFilter);
+    }
+
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
+        localBroadcastManager.unregisterReceiver(localReceiver);
     }
 
     public void requestWeather(final String weatherId){
@@ -222,4 +243,22 @@ public class WeatherActivity extends AppCompatActivity {
             }
         });
     }
+
+    class LocalReceiver extends BroadcastReceiver{
+        @Override
+        public void onReceive(Context context,Intent intent){
+            //SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+            String weatherString = prefs.getString("weather",null);
+            mWeatherId = getIntent().getStringExtra("weather_id");
+
+            if(weatherString != null){
+                Weather weather = Utility.handleWeatherResponse(weatherString);
+                mWeatherId = weather.basic.weatherId;
+                showWeatherInfo(weather);
+                Toast.makeText(WeatherActivity.this, "update sucessfully!", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
 }
+
+

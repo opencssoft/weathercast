@@ -9,10 +9,13 @@ import android.os.IBinder;
 import android.os.SystemClock;
 import android.preference.PreferenceManager;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v4.content.LocalBroadcastManager;
 
+import com.example.fangchen.weathercast.R;
 import com.example.fangchen.weathercast.gson.Weather;
 import com.example.fangchen.weathercast.util.HttpUtil;
 import com.example.fangchen.weathercast.util.Utility;
+import com.example.fangchen.weathercast.WeatherActivity;
 
 import java.io.IOException;
 
@@ -33,8 +36,14 @@ public class AutoUpdateService extends Service {
     public int onStartCommand(Intent intent,int flags,int startId){
         updateWeather();
         updateBingPic();
+
+        LocalBroadcastManager localBroadcastManager;
+        localBroadcastManager = LocalBroadcastManager.getInstance(this);
+        Intent intent1 = new Intent("com.example.fangchen.weathercast.weatherupdate");
+        localBroadcastManager.sendBroadcast(intent1);
+
         AlarmManager alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
-        int anHour = 8*60*60*1000;
+        int anHour = 60*1000;//8*60*60*1000;
         long triggerAtTime = SystemClock.elapsedRealtime()+anHour;
         Intent i = new Intent(this,AutoUpdateService.class);
         PendingIntent pi = PendingIntent.getService(this,0,i,0);
