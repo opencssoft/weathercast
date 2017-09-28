@@ -142,7 +142,7 @@ public class WeatherActivity extends AppCompatActivity {
 
     public void requestWeather(final String weatherId){
         String weatherUrl = "http://guolin.tech/api/weather?cityid="+weatherId+"&key=e7c617f335634f449bee21529ac1bf22";
-        HttpUtil.sendOkHttpRequest(weatherUrl,new Callback(){
+        HttpUtil.getInstance().sendOkHttpRequest(weatherUrl,new Callback(){
             @Override
             public void onResponse(Call call,Response response) throws IOException{
                 final String responseText = response.body().string();
@@ -222,7 +222,7 @@ public class WeatherActivity extends AppCompatActivity {
 
     private void loadBingPic(){
         String requestBingPic = "http://guolin.tech/api/bing_pic";
-        HttpUtil.sendOkHttpRequest(requestBingPic,new Callback(){
+        HttpUtil.getInstance().sendOkHttpRequest(requestBingPic,new Callback(){
             @Override
             public void onResponse(Call call,Response response) throws IOException{
                 final String bingPic = response.body().string();

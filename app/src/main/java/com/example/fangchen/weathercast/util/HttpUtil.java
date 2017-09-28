@@ -8,9 +8,26 @@ import okhttp3.*;
 
 public class HttpUtil {
 
+    private static OkHttpClient mClient;
+
+    private static HttpUtil instance;
+
+    private HttpUtil() {
+        if (mClient == null) {
+            mClient = new OkHttpClient();
+        }
+    }
+
+    public synchronized static HttpUtil getInstance() {
+        if (instance == null) {
+            instance = new HttpUtil();
+        }
+
+        return instance;
+    }
+
     public static void sendOkHttpRequest(String address,okhttp3.Callback callback){
-        OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder().url(address).build();
-        client.newCall(request).enqueue(callback);
+        mClient.newCall(request).enqueue(callback);
     }
 }
